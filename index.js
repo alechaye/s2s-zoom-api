@@ -32,7 +32,10 @@ app.options("*", cors());
 
 const getTokenFromZoomAsync = async () => {
   try {
-    const { ZOOM_ACCOUNT_ID, ZOOM_CLIENT_ID, ZOOM_CLIENT_SECRET } = process.env;
+    // const { ZOOM_ACCOUNT_ID, ZOOM_CLIENT_ID, ZOOM_CLIENT_SECRET } = process.env;
+    const ZOOM_ACCOUNT_ID = "RdxUE0weQSCMrpgais2pRA";
+    const ZOOM_CLIENT_ID = "MxjxbjiQC9wQjQ8YWiLw";
+    const ZOOM_CLIENT_SECRET = "fOrt1MfapdLVIM5Q8bprGyA4p7ym04Qt";
 
     const request = await axios.post(
       ZOOM_OAUTH_ENDPOINT,
@@ -136,7 +139,8 @@ const getMeetingsFromZoomAsync = async (req, res) => {
     );
     const data = request.data;
     await redisClient.set("upcoming", JSON.stringify(data), {
-      EX: 6000,
+      // 60 seconds expiration
+      EX: 60,
       NX: true,
     });
     res.send({
